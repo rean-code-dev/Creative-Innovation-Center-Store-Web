@@ -174,7 +174,9 @@ function CategoryPageDash() {
                     </button> */}
 
                     {/* Refresh Button */}
-                    <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1">
+                    <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1"
+                    onClick={() => getlist_category()}
+                    >
                         <RefreshCw size={16} />
                         Refresh
                     </button>

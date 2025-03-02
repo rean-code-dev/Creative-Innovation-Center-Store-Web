@@ -19,10 +19,16 @@ const Order = require("./src/routes/order.route")
 const Banner = require("./src/routes/banner.route")
 const OptionFeedback = require("./src/routes/option_feedback.route")
 const Promotion = require("./src/routes/promotion.route")
+const Search = require("./src/routes/search.route")
+
+
+
+
 
 
 Product(app,"/api/product")
 Category(app,"/api/category")
+Search(app,"/api/search")
 Employee(app,"/api/employee")
 WishList(app,"/api/favorite")
 Payment_methode(app,"/api/payment")

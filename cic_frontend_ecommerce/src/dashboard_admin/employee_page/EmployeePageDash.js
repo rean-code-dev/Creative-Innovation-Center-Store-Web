@@ -485,12 +485,12 @@ function EmployeePageDash() {
     const [item, setItem] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
-      const [page, setPage] = useState(1);
-        const [perPage, setPerPage] = useState(5);
-        const [totalPages, setTotalPages] = useState(1);
-          const [dateTime, setDateTime] = useState(new Date());
-          const [searchText, setSearchText] = useState("");
-              const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(5);
+    const [totalPages, setTotalPages] = useState(1);
+    const [dateTime, setDateTime] = useState(new Date());
+    const [searchText, setSearchText] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [form] = Form.useForm();
 
@@ -586,7 +586,10 @@ function EmployeePageDash() {
             <LoadingOverlay loading={loading} />
             <div style={{  display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3>Employee</h3>
-                <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span>
+                {/* <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span> */}
+                <span style={{ fontWeight: "bold" }}>
+  {dateTime.toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })}
+</span>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
