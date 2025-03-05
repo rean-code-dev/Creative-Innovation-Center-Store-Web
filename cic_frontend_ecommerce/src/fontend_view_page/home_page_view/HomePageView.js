@@ -5,7 +5,16 @@ import Img1 from '../../components/assets/images/logo_page.png'
 import Img2 from '../../components/assets/images/logo_page.png'
 import Img3 from '../../components/assets/images/logo_page.png'
 import Img4 from '../../components/assets/images/logo_page.png'
-import { FaStar } from "react-icons/fa6";
+import Banner from "../../components/banner/Banner";
+import Product from "../../components/top_product/TopProduct";
+import Button from "../../components/Button/Button";
+import ImageSlider from "../../components/banner_slider/ImageSlider";
+import Tap from "../../components/Button/Tap";
+import InfCard from "../../components/our_team/InfCard";
+import ProductNew from "../../components/top_product/ProductNew";
+import "../../homeStyle/container.css";
+import Footer from "../../components/footer/Footer";
+
 const ProductsData = [
   {
     id: 1,
@@ -73,60 +82,125 @@ const ProductsData = [
   },
 ];
 function HomePageView() {
-  return (
-    <div className="mt-14 mb-12">
-      <div className="container">
-        {/* Header section */}
-        <div className="text-center mb-10 max-w-[600px] mx-auto">
-          <p data-aos="fade-up" className="text-sm text-primary">
-            Top Selling Products for you
-          </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
-            Products
-          </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
-            asperiores modi Sit asperiores modi
-          </p>
-        </div>
-        {/* Body section */}
-        <div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center gap-5">
-            {/* card section */}
-            {ProductsData.map((data) => (
-              <div
-                data-aos="fade-up"
-                data-aos-delay={data.aosDelay}
-                key={data.id}
-                className="space-y-3"
-              >
-                <img
-                  src={data.img}
-                  alt=""
-                  className="h-[220px] w-[150px] object-cover rounded-md"
-                />
-                <div>
-                  <h3 className="font-semibold">{data.title}</h3>
-                  <p className="text-sm text-gray-600">{data.color}</p>
-                  <div className="flex items-center gap-1">
-                    <FaStar className="text-yellow-400" />
-                    <span>{data.rating}</span>
-                  </div>
-                </div>
-              </div>
+    return (
+      <div className="w-full h-auto">
+        {/* Header */}
+        <header className="w-full px-20 bg-blue-300 h-12 flex items-center justify-between pt-3">
+          <div className="flex items-center">
+            <p className="mr-5 text-black cursor-pointer">090 000 0000 / 090 000 0000</p>
+            <p className="text-black cursor-pointer">hello@gmail.com</p>
+          </div>
+          <div>
+            <ul>
+              <li className="relative group">
+                <span className="text-black cursor-pointer py-3 transition-all duration-500">
+                  My Account
+                </span>
+                <ul className="hidden group-hover:block absolute bg-gray-100 shadow-lg px-5 py-2 right-0 top-9 min-w-[120px]">
+                  <li className="pb-2">
+                    <a href="#" className="text-sm text-black block">Login</a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-sm text-black block">Register</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </header>
+        
+        {/* Navigation Bar dfghjkfghjkhjk*/}
+        <nav className="dark:text-white px-20 bg-red-500 h-20 flex justify-between items-center">
+          <h2 className="text-4xl cursor-pointer">C-I-C</h2>
+          <ul className="flex items-center space-x-6 pt-3">
+            {['Development', 'Electronics', 'Mechanical', 'Robotic', 'Tool'].map((menu, index) => (
+              <li key={index} className="group hover:text-gray-600 px-3 py-5 cursor-pointer relative">
+                {menu}
+                {index < 3 && (
+                  <ul className="absolute hidden group-hover:block bg-gray-200 w-56 shadow-lg px-3 py-2 top-[100px] min-w-[120px]">
+                    {Array(9).fill("Test").map((item, idx) => (
+                      <li key={idx} className="py-2">
+                        <a href="#" className="no-underline text-black">{item}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             ))}
+          </ul>
+          <div className="flex items-center space-x-4 pt-3">
+            <p className="cursor-pointer">icon</p>
+            <p className="cursor-pointer">icon</p>
           </div>
-          {/* view all button */}
-          <div className="flex justify-center">
-            <button className="text-center mt-10 cursor-pointer bg-primary text-white py-1 px-5 rounded-md">
-              View All Button
-            </button>
+        </nav>
+        
+        {/* Slider */}
+        <section>
+          <Banner />
+        </section>
+  
+        {/* Features */}
+        <section className="grid grid-cols-4 gap-4 w-full px-20 h-20 pt-2">
+          {['Shipping', 'Gift Voucher', 'Money Back', 'Safe Payment'].map((feature, index) => (
+            <div key={index} className="flex items-center justify-center">
+              <p className="pr-4">Icon</p>
+              <h4 className="text-xl text-white">{feature}</h4>
+            </div>
+          ))}
+        </section>
+  
+        {/* Trending Products */}
+        <section className="pb-10 w-full text-white text-center">
+          <h1 className="pt-10 pb-20 text-4xl">Trending Products</h1>
+          <div className="flex justify-center items-center">
+            <Product />
           </div>
-        </div>
+          <div className="flex justify-center pt-20 h-20 pb-5">
+            <Button btnName="See more" />
+          </div>
+        </section>
+        
+        {/* New Products */}
+        <section className="pb-20 text-white text-center">
+          <h1 className="pt-16 pb-20 text-4xl">New Products</h1>
+          <ProductNew />
+          <div className="flex justify-center pt-20 h-20 pb-10">
+            <Button btnName="See more" />
+          </div>
+        </section>
+        
+        {/* Image Slider */}
+        <section className="pb-10 h-[100vh] pt-16">
+          <ImageSlider />
+        </section>
+        
+        {/* Our Products */}
+        <section className="pb-20 text-white text-center">
+          <h1 className="pt-10 text-4xl">Our Product</h1>
+          <div className="flex justify-center pt-10">
+            <Tap />
+          </div>
+          <div className="flex justify-center pt-20 h-20 pb-5">
+            <Button btnName="See more" />
+          </div>
+        </section>
+        
+        {/* Testimonial */}
+        <section className="pb-10 text-white text-center">
+          <h1 className="text-4xl">Testimonial</h1>
+          <p className="py-3 text-lg font-sans">Let’s hear from our loyal customers.</p>
+          <div className="flex justify-center pt-10">
+            <InfCard />
+          </div>
+        </section>
+        {/* Footer */}
+        <section className="bg-black text-white text-center">
+          <Footer />
+        </section>
+
       </div>
-    </div>
-  );
-}
+    );
+  };
 
 export default HomePageView
 

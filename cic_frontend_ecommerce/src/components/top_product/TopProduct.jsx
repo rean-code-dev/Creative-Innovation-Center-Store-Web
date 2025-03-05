@@ -1,104 +1,122 @@
 import React from "react";
-import Img1 from '../assets/images/logo_page.png'
-import Img2 from '../assets/images/logo_page.png'
-import Img3 from '../assets/images/logo_page.png'
-import { FaStar } from "react-icons/fa";
+import { useState } from "react";
 
-const ProductsData = [
+const product = [
   {
     id: 1,
-    img: Img1,
-    title: "Casual Wear",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Women Ethnic",
+    price: 5.0,
   },
   {
     id: 2,
-    img: Img2,
-    title: "Printed shirt",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Women western",
+    price: 4.5,
   },
   {
     id: 3,
-    img: Img3,
-    title: "Women shirt",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Goggles",
+    price: 3.0,
   },
   {
     id: 4,
-    img: Img1,
-    title: "Casual Wear",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Printed T-Shirt",
+    price: 4.4,
   },
   {
     id: 5,
-    img: Img2,
-    title: "Printed shirt",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Printed T-Shirt",
+    price: 4.4,
+  },
+  {
+    id: 6,
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Printed T-Shirt",
+    price: 4.4,
+  },
+  {
+    id: 7,
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Printed T-Shirt",
+    price: 4.4,
+  },
+  {
+    id: 8,
+    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
+    title: "Printed T-Shirt",
+    price: 4.4,
   },
 ];
-const TopProducts = ({ handleOrderPopup }) => {
+
+function Product() {
+  const [quantities, setQuantities] = useState(product.map(() => 1));
+
+  const increaseQuantity = (index) => {
+    const newQuantities = [...quantities];
+    newQuantities[index] += 1;
+    setQuantities(newQuantities);
+  };
+
+  const decreaseQuantity = (index) => {
+    const newQuantities = [...quantities];
+    newQuantities[index] =
+      newQuantities[index] > 1 ? newQuantities[index] - 1 : 1;
+    setQuantities(newQuantities);
+  };
+
   return (
-    <div>
-      <div className="container">
-        {/* Header section */}
-        <div className="text-left mb-24">
-          <p data-aos="fade-up" className="text-sm text-primary">
-            Top Rated Products for you
-          </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
-            Best Products
-          </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
-            asperiores modi Sit asperiores modi
-          </p>
-        </div>
-        {/* Body section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center ">
-          {ProductsData.map((data) => (
-            <div
-              data-aos="zoom-in"
-              className="rounded-2xl bg-bg-black/80 dark:bg-gray-800 hover:bg-black/80 dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
-            >
-              {/* image section */}
-              <div className="h-[100px]">
-                <img
-                  src={data.img}
-                  alt=""
-                  className="max-w-[140px] block mx-auto transform -translate-y-20 group-hover:scale-105 duration-300 drop-shadow-md"
-                />
-              </div>
-              {/* details section */}
-              <div className="p-4 text-center">
-                {/* star rating */}
-                <div className="w-full flex items-center justify-center gap-1">
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
+    <>
+      <div className="grid grid-cols-4 gap-5 w-full px-20">
+        {product.map((item, index) => (
+          <div
+            key={item.id}
+            className="w-[310px] h-[500px] bg-gray-100 rounded-lg shadow-lg overflow-hidden"
+          >
+            <img
+              src={item.img}
+              alt={item.title}
+              className="w-full object-cover h-[70%] rounded-t-lg p-2 hover:scale-110 transition-transform duration-300 cursor-pointer"
+            />
+            <div className="h-[30%] flex flex-col justify-center items-start p-2">
+              <p className="text-sm font-semibold truncate overflow-hidden whitespace-nowrap w-full">
+                {item.title}
+              </p>
+              <p className="text-green-600 text-lg">$ {item.price} each</p>
+              <div className="flex items-center justify-center space-x-10">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => decreaseQuantity(index)}
+                    className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                  >
+                    -
+                  </button>
+                  <span className="text-xk text-gray-900">{quantities[index]}</span>
+                  <button
+                    onClick={() => increaseQuantity(index)}
+                    className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                  >
+                    +
+                  </button>
                 </div>
-                <h1 className="text-xl font-bold">{data.title}</h1>
-                <p className="text-gray-500 group-hover:text-white duration-300 text-sm line-clamp-2">
-                  {data.description}
-                </p>
-                <button
-                  className="bg-primary hover:scale-105 duration-300 text-white py-1 px-4 rounded-full mt-4 group-hover:bg-white group-hover:text-primary"
-                  onClick={handleOrderPopup}
-                >
-                  Order Now
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button className="px-6 py-1 text-gray-900 rounded-lg hover:bg-red-500 hover:text-white border-2 border-red-500 transition-colors">
+                    View
+                  </button>
+                  <button className="px-6 py-1 text-gray-900 rounded-lg hover:bg-red-500 hover:text-white border-2 border-red-500 transition-colors">
+                    Buy
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </div>
+    </>
   );
-};
+}
 
-export default TopProducts;
+export default Product;
