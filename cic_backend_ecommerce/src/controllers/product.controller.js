@@ -11,6 +11,7 @@ const getAll_product = async (req, res) => {
 
         const pagination = new Pagination('', page, perpage);
 
+        const listCategory = await db.query("SELECT * FROM category")
        
         const sql = "SELECT * FROM product LIMIT ? OFFSET ?";
         const products = await db.query(sql, [pagination.perPage, pagination.offset]);

@@ -468,7 +468,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 // import { Table, Button, Modal, Form, Input, Select, DatePicker, Upload } from 'antd';
-import { Table, Button, Modal, Form, Input, Select, Upload, Pagination, Tag ,DatePicker} from 'antd';
+import { Table, Button, Modal, Form, Input, Select, Upload, Pagination, Tag, DatePicker } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import "../../server/server_route";
 import Colors from '../../components/colors/web_colors';
@@ -581,15 +581,15 @@ function EmployeePageDash() {
 
     return (
         <div style={{ padding: 20 }}>
-            
+
             {/* Loading Spinner */}
             <LoadingOverlay loading={loading} />
-            <div style={{  display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3>Employee</h3>
                 {/* <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span> */}
                 <span style={{ fontWeight: "bold" }}>
-  {dateTime.toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })}
-</span>
+                    {dateTime.toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })}
+                </span>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>

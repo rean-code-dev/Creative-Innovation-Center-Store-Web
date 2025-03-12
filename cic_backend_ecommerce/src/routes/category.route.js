@@ -3,7 +3,7 @@ const controller =  require("../controllers/category.controller")
 const {upload} = require("../utils/service")
 
 const Category = (app,base_route) =>{
-   // app.get(base_route,controller.getAll_categoy)
+   app.get(base_route,controller.getAll_categoy)
     app.get(`${base_route}/:id`,controller.getone_category)
     app.post(base_route,upload.single("image"),controller.create_category)
     app.put(base_route,controller.update_category)

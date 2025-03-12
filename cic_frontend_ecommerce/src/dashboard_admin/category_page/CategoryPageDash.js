@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, Upload, message, Tag } from 'antd';
+import { useEffect, useState , useRef } from 'react';
+import { Table, Button, Modal, Form, Input, Upload, message, Tag, Select , Space} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import baseUrl from '../../server/server_route';
 import ImagePath from '../../server/image_path';
 import Colors from '../../components/colors/web_colors';
-import { Search, RefreshCw, Filter, Download, Eye } from "lucide-react";
+import { Search, RefreshCw, Filter, Download, Eye, Delete } from "lucide-react";
 import LoadingOverlay from '../../components/custom_loading';
+import { request } from '../share/request';
 
 function CategoryPageDash() {
     const [show, setShow] = useState(false);
@@ -17,24 +18,29 @@ function CategoryPageDash() {
     const [filteredData, setFilteredData] = useState([]); // For search functionality
     const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
+    const [categorryIdEdit,setCategoryIdEdit] = useState(null)
+    const [visible,setVisible] = useState(false)
     const [dateTime, setDateTime] = useState(new Date());
+
+    const [imagePreView, setImagePreView] = useState(null);
+    const inputFileRef = useRef(null);
 
     const [form] = Form.useForm();
 
 
-      useEffect(() => {
-            const interval = setInterval(() => {
-                setDateTime(new Date());
-            }, 1000);
-    
-            return () => clearInterval(interval);
-        }, []);
-    
     useEffect(() => {
-        
+        const interval = setInterval(() => {
+            setDateTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
         getlist_category();
     }, []);
 
+    //================== Get list category ==================
     const getlist_category = async () => {
         setLoading(true); // Show loading
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -47,6 +53,7 @@ function CategoryPageDash() {
         setLoading(false);
     };
 
+    //================== Delete category ==================
     const onDelete_Category = async () => {
         setLoading(true); // Show loading
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -61,7 +68,8 @@ function CategoryPageDash() {
         setLoading(false);
     };
 
-    const onClick_Delete = async(param) => {
+    //============= show From Delete Category ==============
+    const onClick_Delete = async (param) => {
         setLoading(true); // Show loading
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setItem(param);
@@ -78,29 +86,109 @@ function CategoryPageDash() {
         setShowFormCreate(false);
         setItem({});
         form.resetFields();
-       
+
     };
 
-    const onSave_Category = async () => {
-        try {
-            const values = await form.validateFields();
-            setShowFormCreate(false);
+    //============= show save Category ==============
+    // const onSave_Category = async () => {
+    //     try {
+    //         const values = await form.validateFields();
+    //         setShowFormCreate(false);
 
-            const param = {
-                ...values,
-                image: image,
-                parent_id: null
-            };
+    //         const param = {
+    //             ...values,
+    //             image: image,
+    //             parent_id: null
+    //         };
 
-            const url = item.category_id ? `${baseUrl}category/${item.category_id}` : baseUrl + 'category';
-            const method = item.category_id ? 'put' : 'post';
+    //         const url = item.category_id ? `${baseUrl}category/${item.category_id}` : baseUrl + 'category';
+    //         const method = item.category_id ? 'put' : 'post';
 
-            await axios({ url, method, data: param });
-            message.success(`Category ${item.category_id ? 'updated' : 'created'} successfully`);
-            getlist_category();
-        } catch (err) {
-            console.log(err);
+    //         await axios({ url, method, data: param });
+    //         message.success(`Category ${item.category_id ? 'updated' : 'created'} successfully`);
+    //         getlist_category();
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
+
+
+ 
+
+    const onCancelModal = () => {
+        setVisible(false)
+        setCategoryIdEdit(null)
+        form.resetFields()
+
+    }
+
+    const onFinish =  async(item) =>{
+        if(categorryIdEdit == null){
+            var param = {
+                "name_en": item.name_en,
+                "name_kh": item.name_kh,
+                "description": item.description,
+                "parent_id": null,
+                "status": item.status,
+                "image": image
+            }
+            setLoading(true)
+            request("category","post",param).then(res =>{
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1000);
+                if(res){
+                    message.success(res.message)
+                    form.resetFields();
+                    setVisible(false);
+                    getlist_category();
+                }
+            })
+
+        }else{
+            var param = {
+                "name_en": item.name_en,
+                "name_kh": item.name_kh,
+                "description": item.description,
+                "parent_id": null,
+                "status": item.status,
+                "image": image
+            }
+            setLoading(true)
+            request("category", "put", param, categorryIdEdit).then(res =>{
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1000);
+                if(res){
+                    message.success(res.message)
+                    form.resetFields();
+                    setVisible(false);
+                    getlist_category();
+                }
+            })
         }
+
+    }
+    const onEditClick = (item) => {
+        setVisible(true)
+        setCategoryIdEdit(item.category_id)
+        form.setFieldValue({
+            name_en: item.name_en,
+            name_kh: item.name_kh,
+            description: item.description,
+            status: item.status
+        })
+    }
+
+    
+
+
+    const onChangeImage = (e) => {
+        var file = e.target.files[0];
+        setImage(e.target.files[0]);
+        var currentImageSelected = URL.createObjectURL(file);
+        setImage(currentImageSelected);
+
     };
 
     const onClick_edit = async (category) => {
@@ -131,21 +219,19 @@ function CategoryPageDash() {
 
             {/* Loading Spinner */}
             <LoadingOverlay loading={loading} />
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between',}}>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', }}>
                 <h3>Category</h3>
-                <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span>
+                {/* <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span> */}
+                <span style={{ fontWeight: "bold" }}>
+                    {dateTime.toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })}
+                </span>
 
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                 <button
                     className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1"
-                    onClick={async () => {
-                        setLoading(true); // Show loading
-                        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
-                        setLoading(false); // Hide loading
-                        setShowFormCreate(true); // Show form
-                    }}
+                    onClick={async () => { setVisible(true)}}
                 >
                     + Add New
                 </button>
@@ -158,7 +244,10 @@ function CategoryPageDash() {
                             onChange={onSearch}
                             className='w-[300px] h-9 text-lg px-4'
                         />
-                        <Button icon={<SearchOutlined />} className='bg-[#c69651] text-white border-[#c69651] h-9 px-4 text-lg' />
+                        <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1">
+                            <Search size={16} />
+                            Search
+                        </button>
                     </div>
 
                     {/* Select Dropdown */}
@@ -175,7 +264,7 @@ function CategoryPageDash() {
 
                     {/* Refresh Button */}
                     <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1"
-                    onClick={() => getlist_category()}
+                        onClick={() => getlist_category()}
                     >
                         <RefreshCw size={16} />
                         Refresh
@@ -195,7 +284,7 @@ function CategoryPageDash() {
                 </div>
 
             </div>
-            
+
             <Table dataSource={result} rowKey='category_id' bordered
                 components={{
                     header: {
@@ -267,8 +356,17 @@ function CategoryPageDash() {
             </Modal>
 
             {/* Create/Update Modal */}
-            <Modal open={showFormCreate} onCancel={onHideModalFromCreate} onOk={onSave_Category} title={item.category_id ? 'Update Category' : 'Create Category'}>
-                <Form form={form} layout='vertical'>
+            <Modal  open={visible}
+                title={categorryIdEdit == null  ? "Create" : "Edit"}
+                onCancel={onCancelModal}
+                footer={null}
+                maskClosable={false}
+                width={600}>
+                <Form 
+                    form={form} 
+                    layout='vertical' 
+                    onFinish={onFinish}
+                >
                     <Form.Item name='name_en' label='Name EN' rules={[{ required: true, message: 'Please enter name in English' }]}>
                         <Input placeholder='Name EN' />
                     </Form.Item>
@@ -278,23 +376,47 @@ function CategoryPageDash() {
                     <Form.Item name='description' label='Description'>
                         <Input.TextArea placeholder='Description' />
                     </Form.Item>
-                    <Form.Item name='status' label='Status'>
+                    {/* <Form.Item name='status' label='Status'>
                         <Input placeholder='Status' />
+                    </Form.Item> */}
+                    <Form.Item name="status" label="Status">
+                        <Select placeholder="Select Status">
+                            <Select.Option value={1}>Active</Select.Option>
+                            <Select.Option value={0}>Inactive</Select.Option>
+                        </Select>
                     </Form.Item>
-                    <Form.Item label='Upload Image'>
-                        <Upload
-                            listType='picture-card'
-                            showUploadList={false}
-                            beforeUpload={(file) => {
-                                setImage(file);
-                                return false;
-                            }}
-                        >
-                            <div>
-                                <PlusOutlined />
-                                <div style={{ marginTop: 8 }}>Upload</div>
-                            </div>
-                        </Upload>
+                    <Form.Item
+                        label='Upload Image'
+                    >
+                        <input ref={inputFileRef} onChange={onChangeImage} type='file' />
+                        <div>
+                            {(imagePreView != null && imagePreView != '') && 
+                            <div style={{
+                                width: '100px',
+                                backgroundColor: '#EEE',
+                                marginTop: '10px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}>
+                                <img 
+                                style={{}} 
+                                src={imagePreView} 
+                                width={50}
+                                height={50}
+                                />
+                              <Button danger onClick={""} icon = {<Delete/>}>Remove</Button>
+                              </div>
+                            }
+                        </div>
+
+                        
+                    </Form.Item>
+                    <Form.Item style={{textAlign:'right'}}>
+                        <Space align="end">
+                            <Button  type="default">Cancel</Button>
+                            <Button onClick={()=>form.resetFields()} type="default">Clear</Button>
+                            <Button htmlType="submit"  style={{backgroundColor:"green"}}>{categorryIdEdit == null ? "Save" : "Update"}</Button>
+                        </Space>
                     </Form.Item>
                 </Form>
             </Modal>

@@ -118,7 +118,10 @@ function ProductPageDash() {
             <LoadingOverlay loading={loading} />
             <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
                 <h3>Product List</h3>
-                <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span>
+                {/* <span style={{ fontWeight: "bold" }}>{dateTime.toLocaleString()}</span> */}
+                <span style={{ fontWeight: "bold" }}>
+                    {dateTime.toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })}
+                </span>
 
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
@@ -142,7 +145,10 @@ function ProductPageDash() {
                             onChange={""}
                             className='w-[300px] h-9 text-lg px-4'
                         />
-                        <Button icon={<SearchOutlined />} className='bg-[#c69651] text-white border-[#c69651] h-9 px-4 text-lg' />
+                        <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1">
+                            <Search size={16} />
+                            Search
+                        </button>
                     </div>
 
                     <div className="flex items-center gap-2 py-2">
@@ -160,12 +166,18 @@ function ProductPageDash() {
                         </select>
 
                         {/* Eye Icon Button */}
-                        <Button icon={<Eye />} className='bg-[#c69651] text-white border-[#c69651] h-9 px-4 text-lg' />
+                        <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1">
+                            <Eye size={16} />
+                            View
+                        </button>
+
                     </div>
 
 
                     {/* Refresh Button */}
-                    <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1">
+                    <button className="bg-[#b6823e] text-white px-3 py-2 rounded-md flex items-center gap-1"
+                        onClick={() => getlistProduct()}
+                    >
                         <RefreshCw size={16} />
                         Refresh
                     </button>
