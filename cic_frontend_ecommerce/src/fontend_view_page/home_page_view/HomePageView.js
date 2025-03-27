@@ -159,8 +159,10 @@ function HomePageView() {
       </section>
 
       {/* Our Products */}
-      <section className="pb-20 text-white text-center">
-        <h1 className="pt-10 text-4xl">Our Product</h1>
+      <section className="pb-10 w-full text-center">
+      <h1 className="pt-10 pb-20 text-4xl text-red-500 font-bold">
+          Our Products
+        </h1>
         <div className="flex justify-center pt-10">
           <Tap />
         </div>
@@ -170,9 +172,9 @@ function HomePageView() {
       </section>
 
       {/* Testimonial */}
-      <section className="pb-10 text-white text-center">
-        <h1 className="text-4xl">Testimonial</h1>
-        <p className="py-3 text-lg font-sans">Let’s hear from our loyal customers.</p>
+      <section className="pb-10 w-full text-center">
+        <h1 className="pt-10 pb-20 text-4xl text-red-500 font-bold">Testimonial</h1>
+        <p className="pt-10 pb-20 text-4xl text-red-500 font-bold py-3 text-lg font-sans">Let’s hear from our loyal customers.</p>
         <div className="flex justify-center pt-10">
           <InfCard />
         </div>

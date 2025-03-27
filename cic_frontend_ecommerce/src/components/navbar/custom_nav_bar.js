@@ -59,7 +59,7 @@ const Navbar = () => {
       style={{ backgroundColor: web_colors.background, borderBottom: "1px solid #E0E0E0" }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 hover:scale-105 transition-transform duration-300">
         <img src={LogoImage} alt="Logo" className="h-12" />
         <span
           className="text-xl font-bold"
@@ -70,7 +70,7 @@ const Navbar = () => {
       </div>
 
       {/* Navigation Links */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-6 ">
         {menuItems.map((menu, index) =>
           menu.subMenu ? (
             <Dropdown
@@ -80,7 +80,7 @@ const Navbar = () => {
               overlayStyle={{ minWidth: "150px" }}
             >
               <a
-                className="cursor-pointer font-medium"
+                className="cursor-pointer font-medium "
                 style={{
                   color: web_colors.primary,
                   transition: "color 0.3s ease",

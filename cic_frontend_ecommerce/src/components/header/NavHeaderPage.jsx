@@ -74,7 +74,7 @@ const Header = () => {
       </div>
 
       {/* Right Section - My Account Dropdown */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-6 ">
         {menuItems.map((menu, index) =>
           menu.subMenu ? (
             <Dropdown

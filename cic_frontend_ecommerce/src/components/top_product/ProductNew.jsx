@@ -4,31 +4,35 @@ import { useNavigate } from "react-router-dom";
 const product = [
   {
     id: 1,
-    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
-    title: "Women Ethnic",
-    price: 5.0,
+    img: "https://etechrobot.com/wp-content/uploads/2019/08/L293D-Motor-Driver.png",
+    title: "Motor Driver L293D",
+    price: 2.5,
     discount: "10%",
+    afterDiscount: 2.0,
   },
   {
     id: 2,
-    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
-    title: "Women western",
+    img: "https://allmartbd.com/wp-content/uploads/2024/02/BTS7960-Motor-Driver-1.jpeg",
+    title: "Mortor Driver BTS7960",
     price: 4.5,
     discount: "$1",
+    afterDiscount: 4.0,
   },
   {
     id: 3,
-    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
-    title: "Goggles",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6DaQBrhLuKjsXTnmkzDnn0KhzSUXrRhbS2nnT3mWEgQBfPyfY3cqQFVz2s6jmu6n0LQw&usqp=CAU",
+    title: "Wheel 65mm for TT Motor Yellow",
     price: 3.0,
     discount: "15%",
+    afterDiscount: 2.5,
   },
   {
     id: 4,
-    img: "https://img.freepik.com/free-vector/abstract-logo-template_23-2147503137.jpg?ga=GA1.1.1322610982.1696675268&semt=ais_hybrid",
-    title: "Printed T-Shirt",
-    price: 4.4,
-    discount: "$2",
+    img: "https://cdn1.botland.store/71668-large_default/dc-motor-with-148-gear-3-6v-with-double-sided-shaft-200rpm.jpg",
+    title: "DC Motor 3.6V Yellow",
+    price: 1.5,
+    discount: "15",
+    afterDiscount: 1.3,
   },
 ];
 
@@ -65,18 +69,32 @@ function ProductNew() {
               {item.discount}
             </div>
           )}
-
+  
           <img
             src={item.img}
             alt={item.title}
             className="w-full object-cover h-[70%] rounded-t-lg p-2 hover:scale-110 transition-transform duration-300 cursor-pointer"
           />
           <div className="h-[30%] flex flex-col justify-center items-start p-4">
-            <p className="text-sm font-semibold truncate overflow-hidden whitespace-nowrap w-full">
-              {item.title}
-            </p>
-            <p className="text-green-600 text-lg font-semibold">$ {item.price} each</p>
-            <div className="flex items-center justify-between space-x-4 pt-4">
+            <p className="font-semibold text-black">{item.title}</p>
+  
+            {/* Price Section */}
+            <div className="flex items-center space-x-2">
+              {item.discount ? (
+                <>
+                  <p className="text-green-600 text-lg font-semibold">
+                    ${item.afterDiscount.toFixed(2)}
+                  </p>
+                  <p className="text-red-500 text-lg font-semibold line-through">
+                    ${item.price.toFixed(2)}
+                  </p>
+                </>
+              ) : (
+                <p className="text-green-600 text-lg font-semibold">${item.price.toFixed(2)}</p>
+              )}
+            </div>
+  
+            <div className="flex items-center justify-between space-x-4">
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => decreaseQuantity(index)}
@@ -93,14 +111,11 @@ function ProductNew() {
                 </button>
               </div>
               <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => handleViewProduct(item.id)} // Navigate to product detail
-                  className="px-6 py-1 text-gray-900 rounded-lg hover:bg-red-500 hover:text-white border-2 border-red-500 transition-colors"
-                >
+                <button className="px-6 py-1 text-gray-900 rounded-lg hover:bg-red-500 hover:text-white border-2 border-red-500 transition-colors">
                   View
                 </button>
                 <button className="px-6 py-1 text-gray-900 rounded-lg hover:bg-red-500 hover:text-white border-2 border-red-500 transition-colors">
-                  Buys
+                  Buy
                 </button>
               </div>
             </div>
@@ -109,6 +124,7 @@ function ProductNew() {
       ))}
     </div>
   );
+
 }
 
 export default ProductNew;
